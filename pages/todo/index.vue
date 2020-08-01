@@ -7,16 +7,17 @@
             <div class="card-body">
               <h4 class="card-title">Todo list</h4>
               <add @clicked="addTask" />
-              <div>
-                {{ task }}
-              </div>
               <div class="list-wrapper">
                 <ul
                   class="d-flex flex-column-reverse todo-list"
                   v-for="task in taskList"
                   :key="task.id"
                 >
-                  <todo :name="task.task" />
+                  <todo
+                    @changeStatus="setStatus"
+                    @deleteTask="deleteTask"
+                    :task="task"
+                  />
                 </ul>
               </div>
             </div>
@@ -27,8 +28,6 @@
   </div>
 </template>
 <script>
-import Swal from "sweetalert2";
-import bootstrap from "bootstrap";
 import Search from "@/components/searchBar";
 import todo from "@/components/todo/todo";
 import add from "@/components/todo/add";
@@ -36,50 +35,42 @@ export default {
   component: {
     Search,
     todo,
-    add
+    add,
   },
   data() {
     return {
       task: "",
-      taskList: [
-        {
-          id: 1,
-          task: "eat food",
-          status: false
-        },
-        {
-          id: 2,
-          task: "drink water",
-          status: false
-        },
-        {
-          id: 3,
-          task: "breath",
-          status: false
-        },
-        {
-          id: 4,
-          task: "stand up",
-          status: false
-        }
-      ]
+      taskList: [],
     };
   },
   methods: {
     addTask(value) {
-      if (value.length > 0) {
-        length = this.taskList.length + 1;
-        let data = {
-          id: length,
-          task: value,
-          status: false
-        };
-        this.taskList.push(data);
-      } else {
-        Swal.fire("hello fool wanna type frist ?");
-      }
-    }
-  }
+      length = this.taskList.length + 1;
+      let data = {
+        id: length,
+        task: value,
+        status: false,
+      };
+      this.taskList.push(data);
+    },
+    setStatus(value) {
+      this.taskList.forEach((el) => {
+        if (el.id == value) {
+          el.status = !el.status;
+        }
+      });
+    },
+    deleteTask(value) {
+      let index;
+      this.taskList.forEach((el) => {
+        if (el.id == value) {
+          index = el;
+        }
+      });
+      index = this.taskList.indexOf(index);
+      this.taskList.splice(index, 1);
+    },
+  },
 };
 </script>
 

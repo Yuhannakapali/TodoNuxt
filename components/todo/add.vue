@@ -5,6 +5,7 @@
       type="text"
       class="form-control todo-list-input"
       placeholder="What do you need to do today?"
+      v-on:keyup.enter="addTask"
     />
     <button
       class="add btn btn-primary font-weight-bold todo-list-add-btn"
@@ -16,18 +17,24 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 export default {
   name: "add",
   data() {
     return {
-      task: ""
+      task: "",
     };
   },
   methods: {
     addTask(event) {
-      this.$emit("clicked", this.task);
-    }
-  }
+      if (this.task.length > 0) {
+        this.$emit("clicked", this.task);
+        this.task = "";
+      } else {
+        Swal.fire("hello fool wanna type frist ?");
+      }
+    },
+  },
 };
 </script>
 

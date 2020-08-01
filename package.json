@@ -1,5 +1,5 @@
 {
-  "name": "todoNuxt",
+  "name": "todonuxt",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -9,12 +9,17 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-brands-svg-icons": "^5.14.0",
+    "@fortawesome/free-solid-svg-icons": "^5.14.0",
+    "@fortawesome/vue-fontawesome": "^0.1.10",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.15.0",
+    "googleapis": "^39.2.0",
     "jquery": "^3.5.1",
     "nuxt": "^2.14.0",
-    "sweetalert": "^2.1.2",
     "sweetalert2": "^9.17.1"
   },
   "devDependencies": {}
