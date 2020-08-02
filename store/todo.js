@@ -1,8 +1,7 @@
 import Cookies from "js-cookie";
-import { datastore } from "googleapis/build/src/apis/datastore";
 
 export const state = () => ({
-  list: Cookies.get("todoList") || [],
+  list: [],
 });
 
 export const mutations = {
@@ -14,7 +13,6 @@ export const mutations = {
       status: false,
     };
     state.list.push(obj);
-    Cookies.set("todoList", state.list);
   },
   remove(state, { todo }) {
     state.list.splice(state.list.indexOf(todo), 1);
@@ -25,6 +23,15 @@ export const mutations = {
         element.status = !element.status;
       }
     });
+    Cookies.remove("taskList");
+    Cookies.set("taskList", state.list);
+  },
+  sync(state) {
+    if (Cookies.get("todoList")) {
+      state.list = JSON.parse(Cookies.get("todoList"));
+    } else {
+      state.list = [];
+    }
   },
 };
 
@@ -35,5 +42,5 @@ export const getters = {
 };
 
 export const action = {
-  save() {},
+  addtodos(context) {},
 };

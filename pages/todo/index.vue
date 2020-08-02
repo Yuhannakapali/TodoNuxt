@@ -56,6 +56,9 @@ export default {
       this.$store.commit("todo/remove", value);
     },
   },
+  mounted() {
+    this.$store.commit("todo/sync");
+  },
 };
 </script>
 
