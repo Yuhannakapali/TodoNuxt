@@ -13,11 +13,7 @@
                   v-for="task in taskList"
                   :key="task.id"
                 >
-                  <todo
-                    @changeStatus="setStatus"
-                    @deleteTask="deleteTask"
-                    :task="task"
-                  />
+                  <todo @changeStatus="setStatus" @deleteTask="deleteTask" :task="task" />
                 </ul>
               </div>
             </div>
@@ -28,6 +24,8 @@
   </div>
 </template>
 <script>
+// import
+import { mapMutations } from "vuex";
 import Search from "@/components/searchBar";
 import todo from "@/components/todo/todo";
 import add from "@/components/todo/add";
@@ -40,35 +38,22 @@ export default {
   data() {
     return {
       task: "",
-      taskList: [],
     };
+  },
+  computed: {
+    taskList() {
+      return this.$store.state.todo.list;
+    },
   },
   methods: {
     addTask(value) {
-      length = this.taskList.length + 1;
-      let data = {
-        id: length,
-        task: value,
-        status: false,
-      };
-      this.taskList.push(data);
+      this.$store.commit("todo/add", value);
     },
     setStatus(value) {
-      this.taskList.forEach((el) => {
-        if (el.id == value) {
-          el.status = !el.status;
-        }
-      });
+      this.$store.commit("todo/toggle", value);
     },
     deleteTask(value) {
-      let index;
-      this.taskList.forEach((el) => {
-        if (el.id == value) {
-          index = el;
-        }
-      });
-      index = this.taskList.indexOf(index);
-      this.taskList.splice(index, 1);
+      this.$store.commit("todo/remove", value);
     },
   },
 };

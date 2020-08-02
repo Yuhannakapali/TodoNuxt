@@ -2,7 +2,8 @@
   <li :class="{ completed: isActive }">
     <div class="form-check">
       <label class="form-check-label" @click="completeTask">
-        <input class="checkbox" type="checkbox" /> {{ task.task }}
+        <input class="checkbox" type="checkbox" />
+        {{ task.task }}
         <i class="input-helper"></i>
       </label>
     </div>
@@ -19,16 +20,16 @@ export default {
       isActive: false,
     };
   },
-  created: function() {
+  created: function () {
     this.isActive = this.task.status;
   },
   methods: {
     completeTask(event) {
       this.isActive = !this.isActive;
-      this.$emit("changeStatus", this.task.id);
+      this.$emit("changeStatus", this.task);
     },
     deleteTask(event) {
-      this.$emit("deleteTask", this.task.id);
+      this.$emit("deleteTask", this.task);
     },
   },
 };
