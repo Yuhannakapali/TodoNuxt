@@ -13,9 +13,16 @@ export const mutations = {
       status: false,
     };
     state.list.push(obj);
+    Cookies.remove("taskList");
+    Cookies.set("taskList", JSON.stringify(state.task));
+    state.list = JSON.parse(Cookies.get("taskList"));
+    pg;
   },
   remove(state, { todo }) {
     state.list.splice(state.list.indexOf(todo), 1);
+    Cookies.remove("taskList");
+    Cookies.set("taskList", JSON.stringify(state.task));
+    state.list = JSON.parse(Cookies.get("tasklist"));
   },
   toggle(state, { todo }) {
     state.list.forEach((element) => {
@@ -24,7 +31,8 @@ export const mutations = {
       }
     });
     Cookies.remove("taskList");
-    Cookies.set("taskList", state.list);
+    Cookies.set("taskList", JSON.stringify(state.task));
+    state.list = JSON.parse(Cookies.get("tasklist"));
   },
   sync(state) {
     if (Cookies.get("todoList")) {
@@ -42,5 +50,7 @@ export const getters = {
 };
 
 export const action = {
-  addtodos(context) {},
+  addtodos({ commit }) {
+    commit("add");
+  },
 };
