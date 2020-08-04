@@ -1,22 +1,22 @@
 import Cookies from "js-cookie";
 
 export const state = () => ({
+  temp: 0,
   list: [],
 });
 
 export const mutations = {
+  increase(state) {
+    state.temp += 1;
+  },
   add(state, task) {
-    let length = state.list.length;
+    let length = state.list.length + 1;
     let obj = {
       id: length,
       task: task,
       status: false,
     };
     state.list.push(obj);
-    Cookies.remove("taskList");
-    Cookies.set("taskList", JSON.stringify(state.task));
-    state.list = JSON.parse(Cookies.get("taskList"));
-    pg;
   },
   remove(state, { todo }) {
     state.list.splice(state.list.indexOf(todo), 1);
@@ -34,11 +34,19 @@ export const mutations = {
     Cookies.set("taskList", JSON.stringify(state.task));
     state.list = JSON.parse(Cookies.get("tasklist"));
   },
-  sync(state) {
+  getCookies(state) {
+    console.log("syncing the tasklist");
     if (Cookies.get("todoList")) {
+      console.log(Cookies.get("todoList"));
       state.list = JSON.parse(Cookies.get("todoList"));
     } else {
       state.list = [];
+    }
+  },
+
+  sync(state) {
+    if (state.list !== Cookies.get("taskList")) {
+      state.list = Cookies.get("taskList");
     }
   },
 };
@@ -49,8 +57,16 @@ export const getters = {
   },
 };
 
-export const action = {
-  addtodos({ commit }) {
-    commit("add");
+export const actions = {
+  increment({ commit }) {
+    commit("increase");
+  },
+  addtodos({ commit }, value) {
+    commit("add", value);
+    commit("sync");
+  },
+
+  test({ commit }) {
+    commit("getCookies");
   },
 };

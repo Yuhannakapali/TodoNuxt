@@ -47,17 +47,17 @@ export default {
   },
   methods: {
     addTask(value) {
-      this.$store.commit("todo/add", value);
+      this.$store.dispatch("todo/addtodos", value);
     },
     setStatus(value) {
       this.$store.commit("todo/toggle", value);
     },
     deleteTask(value) {
-      this.$store.commit("todo/remove", value);
+      this.$store.dispatch("todo/test", value);
     },
   },
   mounted() {
-    this.$store.commit("todo/sync");
+    this.$store.dispatch("todo/test");
   },
 };
 </script>
